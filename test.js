@@ -56,6 +56,7 @@ function depositarDinero(deposito, correo) {
         alert("Por favor, ingresa una cantidad válida.")
         return
     }
+
     for (let i = 0; i < Usuarios.length; i++) {
         if (Usuarios[i].correo === correo) {
             Usuarios[i].saldo += deposito
@@ -66,7 +67,7 @@ function depositarDinero(deposito, correo) {
 }
 
 
-function homeBanking(){
+function homeBanking(){    //Usar main.js para cambios y este dejar de backup
     let bandera = true
 
     while(bandera){
