@@ -1,0 +1,85 @@
+body {
+    background-color: #0C080E;
+    color: #E2EDFC;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+.contenedor {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+}
+.carrito {
+    top: 8px;
+    right: 15px;
+    position: absolute;
+    cursor: pointer;
+    transition: 200ms;
+}
+.carrito:hover {
+    transform: scale(1.1);
+}
+.display__none {
+    display: none;
+}
+.carrito__active {
+    transition: 400ms;
+    position: absolute;
+    right: 10px;
+    top: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+    width: 25%;
+    background-color: #26192b;
+    border-left: 4px #e9b4fc;
+}
+.title {
+    text-align: center;
+    padding: 40px 0;
+}
+.vinos {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+.vinos__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 200px;
+    background-color: #211625;
+    padding: 12px 5px;
+    
+    border: 2px solid #b070c7;
+    border-radius: 12px;
+}
+.vinos__card img {
+    width: 140px;
+}
+.vinos__card h2 {
+    margin: 10px 0 6px;
+    font-size: 18px;
+}
+.vinos__card p {
+    margin: 5px;
+    font-size: 14px;
+}
+.button__compra {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: #7b4f8b;
+    color: #E2EDFC;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 150ms;
+}
+.button__compra:hover {
+    background-color: #684375;
+}
