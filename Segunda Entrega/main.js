@@ -2,7 +2,7 @@ document.getElementById("carritoIcon").addEventListener("click", () => {
     document.getElementById("mostrarCarrito").classList.toggle("carrito__active")
 })
 
-let ArrayCarrito = []
+let ArrayCarrito = JSON.parse(localStorage.getItem("carrito")) || []
 
 const nuestrosVinos = [
     {
@@ -67,6 +67,25 @@ const actualizarCarrito = () => {
             </div>
         `
     })
+
+    const botonesEliminar = document.getElementsByClassName("button__eliminar")
+    const arrayBotonesEliminar = Array.from(botonesEliminar)
+
+    arrayBotonesEliminar.forEach(buttonDelete => {
+        buttonDelete.addEventListener("click", e =>{
+            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
+            let vinoExiste = ArrayCarrito[index]
+            
+            if(vinoExiste.cantidad == 1) {
+                ArrayCarrito.splice(index, 1)
+            }else {
+                vinoExiste.cantidad -= 1
+            }
+            actualizarCarrito()
+        })
+    })
+
+    localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
 }
 
 nuestrosVinos.forEach( (vino) => {
@@ -88,13 +107,22 @@ const arrayBotonesVinos = Array.from(botonesVinos)
 
 arrayBotonesVinos.forEach(vinoButton => {
     vinoButton.addEventListener("click", e => {
+        let vinoExiste = ArrayCarrito.find( vino => vino.nombre ==  e.target.parentElement.children[1].innerText )
         
-        ArrayCarrito.push({
-            nombre: e.target.parentElement.children[1].innerText,
-            cantidad: 1,
-            precio: Number(e.target.parentElement.children[3].children[0].innerText),
-            img: e.target.parentElement.children[0].src
-        })
+        if(vinoExiste) {
+            vinoExiste.cantidad += 1
+        }else {
+            ArrayCarrito.push({
+                nombre: e.target.parentElement.children[1].innerText,
+                cantidad: 1,
+                precio: Number(e.target.parentElement.children[3].children[0].innerText),
+                img: e.target.parentElement.children[0].src
+            })
+        }
         actualizarCarrito()
     })
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    actualizarCarrito()
 })

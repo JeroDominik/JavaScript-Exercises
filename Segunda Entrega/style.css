@@ -99,7 +99,7 @@ body {
     margin: 5px;
     font-size: 14px;
 }
-.button__compra, .button__eliminar {
+.button__compra {
     padding: 10px 12px;
     border: none;
     border-radius: 10px;
@@ -111,7 +111,17 @@ body {
 }
 .button__eliminar {
     padding: 4px 6px;
+    border: none;
+    border-radius: 10px;
+    background-color: #7b4f8b;
+    color: #E2EDFC;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 150ms;
 }
 .button__compra:hover {
+    background-color: #684375;
+}
+.button__eliminar:hover {
     background-color: #684375;
 }
