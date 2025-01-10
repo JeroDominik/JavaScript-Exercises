@@ -51,6 +51,34 @@ const nuestrosVinos = [
 
 const vinosDOM = document.getElementById("vinosBox")
 const vinosCarritoDOM = document.getElementById("mostrarCarrito")
+const totalCarrito = document.getElementById("totalCarrito")
+console.dir(totalCarrito)
+
+const calcularTotalCarrito = () => {
+    let total = ArrayCarrito.reduce( (acc, vino) => {
+        return acc + vino.precio * vino.cantidad
+    }, 0)
+
+    totalCarrito.innerText = "= $" + total
+}
+
+const elimnarDeCarrito = () => {
+    const botonesEliminar = document.getElementsByClassName("button__eliminar")
+    const arrayBotonesEliminar = Array.from(botonesEliminar)
+    arrayBotonesEliminar.forEach(buttonDelete => {
+        buttonDelete.addEventListener("click", e =>{
+            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
+            let vinoExiste = ArrayCarrito[index]
+            
+            if(vinoExiste.cantidad == 1) {
+                ArrayCarrito.splice(index, 1)
+            }else {
+                vinoExiste.cantidad -= 1
+            }
+            actualizarCarrito()
+        })
+    })
+}
 
 const actualizarCarrito = () => {
     vinosCarritoDOM.innerHTML = ("")
@@ -68,27 +96,12 @@ const actualizarCarrito = () => {
         `
     })
 
-    const botonesEliminar = document.getElementsByClassName("button__eliminar")
-    const arrayBotonesEliminar = Array.from(botonesEliminar)
-
-    arrayBotonesEliminar.forEach(buttonDelete => {
-        buttonDelete.addEventListener("click", e =>{
-            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
-            let vinoExiste = ArrayCarrito[index]
-            
-            if(vinoExiste.cantidad == 1) {
-                ArrayCarrito.splice(index, 1)
-            }else {
-                vinoExiste.cantidad -= 1
-            }
-            actualizarCarrito()
-        })
-    })
-
+    elimnarDeCarrito()
+    calcularTotalCarrito()
     localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
 }
 
-nuestrosVinos.forEach( (vino) => {
+nuestrosVinos.forEach( vino => {
     vinosDOM.innerHTML += `
         <div class="vinos__card">
             <img  src=${vino.img} alt="Imagen Vino ${vino.nombre}">
@@ -105,7 +118,7 @@ nuestrosVinos.forEach( (vino) => {
 const botonesVinos = document.getElementsByClassName("button__compra")
 const arrayBotonesVinos = Array.from(botonesVinos)
 
-arrayBotonesVinos.forEach(vinoButton => {
+arrayBotonesVinos.forEach( vinoButton => {
     vinoButton.addEventListener("click", e => {
         let vinoExiste = ArrayCarrito.find( vino => vino.nombre ==  e.target.parentElement.children[1].innerText )
         

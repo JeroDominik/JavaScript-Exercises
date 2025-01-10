@@ -17,14 +17,28 @@ body {
 
 /* Carrito Icon */
 .carrito {
-    top: 8px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background-color: #7b4f8b;
+    border-radius: 10px;
+
+    top: 20px;
     right: 15px;
     position: fixed;
     cursor: pointer;
     transition: 200ms;
 }
 .carrito:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+}
+.total {
+    display: flex;
+    color: #0C080E;
+    size: auto;
+    font-weight: 900;
+    font-size: 26px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* Carrito Box */
@@ -35,15 +49,17 @@ body {
     transition: 400ms;
     position: fixed;
     right: 10px;
-    top: 55px;
+    top: 85px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: start;
     align-items: center;
-    height: 100vh;
+    height: 85vh;
     width: 25%;
     background-color: #26192b;
+    overflow-y: auto;
+    padding-bottom: 20px;
 }
 .carrito__card {
     background-color: #0C080E;
