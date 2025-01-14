@@ -52,7 +52,6 @@ const nuestrosVinos = [
 const vinosDOM = document.getElementById("vinosBox")
 const vinosCarritoDOM = document.getElementById("mostrarCarrito")
 const totalCarrito = document.getElementById("totalCarrito")
-console.dir(totalCarrito)
 
 const calcularTotalCarrito = () => {
     let total = ArrayCarrito.reduce( (acc, vino) => {
@@ -67,13 +66,27 @@ const elimnarDeCarrito = () => {
     const arrayBotonesEliminar = Array.from(botonesEliminar)
     arrayBotonesEliminar.forEach(buttonDelete => {
         buttonDelete.addEventListener("click", e =>{
-            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
+            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.parentElement.children[0].innerText)
             let vinoExiste = ArrayCarrito[index]
             
             if(vinoExiste.cantidad == 1) {
                 ArrayCarrito.splice(index, 1)
             }else {
                 vinoExiste.cantidad -= 1
+            }
+            actualizarCarrito()
+        })
+    })
+}
+const agregarEnCarrito = () => {
+    const botonesAgregar = document.getElementsByClassName("button__agregar")
+    const arrayBotonesAgregar = Array.from(botonesAgregar)
+    arrayBotonesAgregar.forEach(buttonPlus => {
+        buttonPlus.addEventListener("click", e =>{
+            let vinoExiste = ArrayCarrito.find(vino => vino.nombre == e.target.parentElement.parentElement.children[0].innerText)
+            
+            if(vinoExiste.cantidad >= 1) {
+                vinoExiste.cantidad += 1
             }
             actualizarCarrito()
         })
@@ -89,14 +102,18 @@ const actualizarCarrito = () => {
                 <div class="noMargin">
                     <h2>${vino.nombre}</h2>
                     <p>Precio: $${vino.precio}</p>
-                    <p>Cantidad: ${vino.cantidad}</p>
-                    <button class="button__eliminar">Eliminar</button>
+                    <div class="carrito__card__cantidades">
+                        <button class="button__agregar">Agregar</button>
+                        <p>${vino.cantidad}</p>
+                        <button class="button__eliminar">Eliminar</button>
+                    </div>
                 </div>
             </div>
         `
     })
 
     elimnarDeCarrito()
+    agregarEnCarrito()
     calcularTotalCarrito()
     localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
 }

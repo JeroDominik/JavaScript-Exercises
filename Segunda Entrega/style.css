@@ -56,10 +56,12 @@ body {
     justify-content: start;
     align-items: center;
     height: 85vh;
-    width: 25%;
+    width: 26%;
     background-color: #26192b;
     overflow-y: auto;
     padding-bottom: 20px;
+    border: 2px solid #b070c7;
+    border-radius: 5px;
 }
 .carrito__card {
     background-color: #0C080E;
@@ -82,6 +84,12 @@ body {
 }
 .noMargin h2 {
     font-size: 18px;
+}
+
+.carrito__card__cantidades {
+    display: flex;
+    gap: 4px;
+    align-items: baseline;
 }
 
 /* Lista Vinos y Vinos Card*/
@@ -125,7 +133,7 @@ body {
     cursor: pointer;
     transition: 150ms;
 }
-.button__eliminar {
+.button__eliminar, .button__agregar {
     padding: 4px 6px;
     border: none;
     border-radius: 10px;
@@ -135,7 +143,7 @@ body {
     cursor: pointer;
     transition: 150ms;
 }
-.button__compra:hover {
+.button__compra:hover, .button__agregar:hover {
     background-color: #684375;
 }
 .button__eliminar:hover {
