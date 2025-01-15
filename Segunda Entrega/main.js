@@ -78,6 +78,7 @@ const elimnarDeCarrito = () => {
         })
     })
 }
+
 const agregarEnCarrito = () => {
     const botonesAgregar = document.getElementsByClassName("button__agregar")
     const arrayBotonesAgregar = Array.from(botonesAgregar)
@@ -87,6 +88,21 @@ const agregarEnCarrito = () => {
             
             if(vinoExiste.cantidad >= 1) {
                 vinoExiste.cantidad += 1
+            }
+            actualizarCarrito()
+        })
+    })
+}
+const vaciarDeCarrito = () => {
+    const botonesVaciar = document.getElementsByClassName("button__vaciar")
+    const arrayBotonesVaciar = Array.from(botonesVaciar)
+    arrayBotonesVaciar.forEach(buttonEmpty => {
+        buttonEmpty.addEventListener("click", e =>{
+            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
+            let vinoExiste = ArrayCarrito[index]
+            
+            if(vinoExiste.cantidad >= 1) {
+                ArrayCarrito.splice(index, 1)
             }
             actualizarCarrito()
         })
@@ -103,10 +119,11 @@ const actualizarCarrito = () => {
                     <h2>${vino.nombre}</h2>
                     <p>Precio: $${vino.precio}</p>
                     <div class="carrito__card__cantidades">
-                        <button class="button__agregar">Agregar</button>
+                        <button class="button__agregar">+</button>
                         <p>${vino.cantidad}</p>
-                        <button class="button__eliminar">Eliminar</button>
+                        <button class="button__eliminar">-</button>
                     </div>
+                    <button class="button__vaciar">Vaciar de Carrito</button>
                 </div>
             </div>
         `
@@ -114,6 +131,7 @@ const actualizarCarrito = () => {
 
     elimnarDeCarrito()
     agregarEnCarrito()
+    vaciarDeCarrito()
     calcularTotalCarrito()
     localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
 }
