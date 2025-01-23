@@ -18,80 +18,90 @@ const calcularTotalCarrito = () => {
     totalCarrito.innerText = "= $" + total
 }
 
-const elimnarDeCarrito = () => {
-    const botonesEliminar = document.getElementsByClassName("button__eliminar")
-    const arrayBotonesEliminar = Array.from(botonesEliminar)
-    arrayBotonesEliminar.forEach(buttonDelete => {
-        buttonDelete.addEventListener("click", e =>{
-            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.parentElement.children[0].innerText)
-            let vinoExiste = ArrayCarrito[index]
-            
-            if(vinoExiste.cantidad == 1) {
-                ArrayCarrito.splice(index, 1)
-            }else {
-                vinoExiste.cantidad -= 1
-            }
-            actualizarCarrito()
-        })
+const eliminarDeCarrito = ( bttnRestar, nombre ) => {
+    bttnRestar.addEventListener("click", () =>{
+        let index = ArrayCarrito.findIndex(vino => vino.nombre == nombre)
+        let vinoExiste = ArrayCarrito[index]
+        
+        if(vinoExiste.cantidad == 1) {
+            ArrayCarrito.splice(index, 1)
+        }else {
+            vinoExiste.cantidad -= 1
+        }
+        actualizarCarrito()
     })
 }
 
-const agregarEnCarrito = () => {
-    const botonesAgregar = document.getElementsByClassName("button__agregar")
-    const arrayBotonesAgregar = Array.from(botonesAgregar)
-    arrayBotonesAgregar.forEach(buttonPlus => {
-        buttonPlus.addEventListener("click", e =>{
-            let vinoExiste = ArrayCarrito.find(vino => vino.nombre == e.target.parentElement.parentElement.children[0].innerText)
-            
-            if(vinoExiste.cantidad >= 1) {
-                vinoExiste.cantidad += 1
-            }
-            actualizarCarrito()
-        })
+const agregarEnCarrito = (bttnSumar, nombre) => {
+    bttnSumar.addEventListener("click", () =>{
+        let vinoExiste = ArrayCarrito.find(vino => vino.nombre == nombre)
+        
+        if(vinoExiste.cantidad >= 1) {
+            vinoExiste.cantidad += 1
+        }
+        actualizarCarrito()
     })
 }
 
-const vaciarDeCarrito = () => {
-    const botonesVaciar = document.getElementsByClassName("button__vaciar")
-    const arrayBotonesVaciar = Array.from(botonesVaciar)
-    arrayBotonesVaciar.forEach(buttonEmpty => {
-        buttonEmpty.addEventListener("click", e =>{
-            let index = ArrayCarrito.findIndex(vino => vino.nombre == e.target.parentElement.children[0].innerText)
-            let vinoExiste = ArrayCarrito[index]
-            
-            if(vinoExiste.cantidad >= 1) {
-                ArrayCarrito.splice(index, 1)
-            }
-            actualizarCarrito()
-        })
+const vaciarDeCarrito = (bttnVaciarCarrito, nombre) => {
+    bttnVaciarCarrito.addEventListener("click", () =>{
+        let index = ArrayCarrito.findIndex(vino => vino.nombre == nombre)
+        let vinoExiste = ArrayCarrito[index]
+        
+        if(vinoExiste.cantidad >= 1) {
+            ArrayCarrito.splice(index, 1)
+        }
+        actualizarCarrito()
     })
 }
 
 const actualizarCarrito = () => {
     vinosCarritoDOM.innerHTML = ("")
-    ArrayCarrito.forEach( vino => {
-        vinosCarritoDOM.innerHTML += `
-            <div class="carrito__card">
-                <img src=${vino.img} alt=${vino.nombre}>
-                <div class="noMargin">
-                    <h2>${vino.nombre}</h2>
-                    <p>Precio: $${vino.precio}</p>
-                    <div class="carrito__card__cantidades">
-                        <button class="button__agregar">+</button>
-                        <p>${vino.cantidad}</p>
-                        <button class="button__eliminar">-</button>
-                    </div>
-                    <button class="button__vaciar">Vaciar de Carrito</button>
-                </div>
-            </div>
-        `
-    })
 
-    elimnarDeCarrito()
-    agregarEnCarrito()
-    vaciarDeCarrito()
-    calcularTotalCarrito()
-    localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
+    ArrayCarrito.forEach( ({nombre, precio, img, cantidad}) => {
+        const container = document.createElement("div")
+        container.classList.add("carrito__card")
+    
+        const imagen = document.createElement("img")
+        imagen.src = img
+        imagen.alt = nombre
+    
+        const containerInfo = document.createElement("div")
+        containerInfo.classList.add("noMargin")
+    
+        const titulo = document.createElement("h2")
+        const valor = document.createElement("p")
+        titulo.innerText = nombre
+        valor.innerText ="Precio: $" + precio
+    
+        const containerInfoCantidad = document.createElement("div")
+        const bttnSumar = document.createElement("button")
+        const cantidadDOM = document.createElement("p")
+        const bttnRestar = document.createElement("button")
+        containerInfoCantidad.classList.add("carrito__card__cantidades")
+        cantidadDOM.innerText = cantidad
+        bttnSumar.innerText = "+"
+        bttnSumar.classList.add("button__agregar")
+        bttnRestar.innerText = "-"
+        bttnRestar.classList.add("button__eliminar")
+    
+        const bttnVaciarCarrito = document.createElement("button")
+        bttnVaciarCarrito.innerText = "Vaciar Carrito"
+        bttnVaciarCarrito.classList.add("button__vaciar")
+    
+        vinosCarritoDOM.append(container)
+        container.append(imagen, containerInfo)
+        containerInfo.append(titulo, valor, containerInfoCantidad, bttnVaciarCarrito)
+        containerInfoCantidad.append(bttnSumar, cantidadDOM, bttnRestar)
+    
+    
+    
+        eliminarDeCarrito(bttnRestar, nombre)
+        agregarEnCarrito(bttnSumar, nombre)
+        vaciarDeCarrito(bttnVaciarCarrito, nombre)
+        calcularTotalCarrito()
+        localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
+    })    
 }
 
 const agregarVinos = ({nombre, img, descripcion, precio}) => {
@@ -142,5 +152,6 @@ document.addEventListener("DOMContentLoaded", async() => {
     data.forEach( (vino) => {
         agregarVinos(vino)
     })
+
     actualizarCarrito()
 })
