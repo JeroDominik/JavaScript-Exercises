@@ -6,16 +6,7 @@ let ArrayCarrito = JSON.parse(localStorage.getItem("carrito")) || []
 
 const vinosDOM = document.getElementById("vinosBox")
 const vinosCarritoDOM = document.getElementById("mostrarCarrito")
-const totalCarrito = document.getElementById("totalCarrito")
 
-
-const calcularTotalCarrito = () => {
-    let total = ArrayCarrito.reduce( (acc, vino) => {
-        return acc + vino.precio * vino.cantidad
-    }, 0)
-
-    totalCarrito.innerText = "= $" + total
-}
 
 const eliminarDeCarrito = ( bttnRestar, nombre ) => {
     bttnRestar.addEventListener("click", () =>{
@@ -98,9 +89,57 @@ const actualizarCarrito = () => {
         eliminarDeCarrito(bttnRestar, nombre)
         agregarEnCarrito(bttnSumar, nombre)
         vaciarDeCarrito(bttnVaciarCarrito, nombre)
-        calcularTotalCarrito()
-        localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
-    })    
+    })
+    calcularTotalCarrito()
+    localStorage.setItem("carrito", JSON.stringify(ArrayCarrito))
+}
+
+const calcularTotalCarrito = () => {
+    let total = ArrayCarrito.reduce( (acc, vino) => {
+        return acc + vino.precio * vino.cantidad
+    }, 0)
+
+    if(total == 0) {
+        const carritoVacio = document.createElement("p")
+        carritoVacio.classList.add("total")
+        carritoVacio.innerText = "Tu Carrito está vacio"
+
+        vinosCarritoDOM.append(carritoVacio)
+    } else {
+        const containerFinalizarCompra = document.createElement("div")
+        containerFinalizarCompra.classList.add("total")
+    
+        const totalCarrito = document.createElement("p")
+        const bttnFinalizarCompra = document.createElement("button")
+        
+        bttnFinalizarCompra.classList.add("button__compra")
+        totalCarrito.innerText = "Total: $" + total
+        bttnFinalizarCompra.innerText = "Finalizar Compra"
+    
+        vinosCarritoDOM.append(containerFinalizarCompra)
+        containerFinalizarCompra.append(totalCarrito, bttnFinalizarCompra)
+
+        bttnFinalizarCompra.addEventListener("click", () => {
+            Swal.fire({
+                title:  "Finalizar Compra",
+                showCancelButton: true,
+                cancelButtonText: "Volver al Carrito",
+                confirmButtonText: "Terminar Compra"
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    Swal.fire({
+                        title: "Gracias por su compra ¿Cual es su email?",
+                        input: "email"
+                    }).then(() => {
+                        ArrayCarrito = []
+                        actualizarCarrito()
+                    })
+                }else{
+                    return
+                }
+            })
+        })
+    }
 }
 
 const agregarVinos = ({nombre, img, descripcion, precio}) => {

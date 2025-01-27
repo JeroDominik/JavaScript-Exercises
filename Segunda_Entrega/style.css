@@ -34,10 +34,12 @@ body {
 }
 .total {
     display: flex;
-    color: #0C080E;
-    size: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
     font-weight: 900;
-    font-size: 26px;
+    font-size: 22px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -159,17 +161,26 @@ body {
     cursor: pointer;
     transition: 150ms;
 }
-.button__compra:hover, .button__agregar:hover, .button__eliminar:hover, .button__vaciar:hover {
+.button__compra:hover, .button__agregar:hover, .button__eliminar:hover, .button__vaciar:hover,.button__verMas:hover {
     background-color: #684375;
 }
 
 
 /* VINOS HTML */
+.header__vinosDOM {
+    display: flex;
+    flex-direction: column;
+    margin: 12px auto 18px;
+    align-items: center;
+    width: 20%;
+    gap: 10px;
+}
+.header__vinosDOM h1 {
+    margin: 0;
+}
 .title__vinosDOM {
     text-align: center;
-    padding: 12px 0 8px;
 }
-
 .vinoDOM {
     display: flex;
     flex-direction: column;
