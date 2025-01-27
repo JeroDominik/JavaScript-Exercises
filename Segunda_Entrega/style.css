@@ -46,7 +46,6 @@ body {
     display: none;
 }
 .carrito__active {
-    transition: 400ms;
     position: fixed;
     right: 10px;
     top: 85px;
@@ -129,7 +128,7 @@ body {
     margin: 5px;
     font-size: 14px;
 }
-.button__compra, .button__vaciar {
+.button__compra, .button__vaciar, .button__verMas {
     padding: 10px 12px;
     border: none;
     border-radius: 10px;
@@ -138,6 +137,12 @@ body {
     font-weight: 700;
     cursor: pointer;
     transition: 150ms;
+}
+.button__verMas {
+    margin-top: 7px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
 }
 .button__vaciar {
     padding: 6px 8px;
@@ -156,4 +161,30 @@ body {
 }
 .button__compra:hover, .button__agregar:hover, .button__eliminar:hover, .button__vaciar:hover {
     background-color: #684375;
+}
+
+
+/* VINOS HTML */
+.title__vinosDOM {
+    text-align: center;
+    padding: 12px 0 8px;
+}
+
+.vinoDOM {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 550px;
+    background-color: #211625;
+    padding: 10px 10px 0;
+    margin-bottom: 24px;
+    
+    border: 2px solid #b070c7;
+    border-radius: 12px;
+}
+.vinoDOM img {
+    width: 85%;
+    border-radius: 5px;
+    margin-top: 10px;
 }

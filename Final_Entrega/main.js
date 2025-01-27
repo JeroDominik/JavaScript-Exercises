@@ -4,7 +4,6 @@ document.getElementById("carritoIcon").addEventListener("click", () => {
 
 let ArrayCarrito = JSON.parse(localStorage.getItem("carrito")) || []
 
-
 const vinosDOM = document.getElementById("vinosBox")
 const vinosCarritoDOM = document.getElementById("mostrarCarrito")
 const totalCarrito = document.getElementById("totalCarrito")
@@ -114,16 +113,21 @@ const agregarVinos = ({nombre, img, descripcion, precio}) => {
     const desc = document.createElement("p")
     const valor = document.createElement("p")
     const btnAgregar = document.createElement("button")
-    btnAgregar.classList.add("button__compra")
-
+    const btnVerMas = document.createElement("a")
+    
     imagen.src = img
     imagen.alt = "Imagen Vino" + nombre
     titulo.innerText = nombre
     desc.innerText = descripcion
     valor.innerText = "Precio: $" + precio
+    btnAgregar.classList.add("button__compra")
     btnAgregar.innerText = "Agregar al Carrito"
+    btnVerMas.classList.add("button__verMas")
+    btnVerMas.innerText = "Ver Más"
+    btnVerMas.target = "_blank"
+    btnVerMas.href = "./Final_Entrega/vinos.html"
 
-    container.append( imagen, titulo, desc, valor, btnAgregar)
+    container.append( imagen, titulo, desc, valor, btnAgregar, btnVerMas )
     vinosDOM.append(container)
 
 
@@ -142,16 +146,19 @@ const agregarVinos = ({nombre, img, descripcion, precio}) => {
         }
         actualizarCarrito()
     })
-}
 
+    btnVerMas.addEventListener("click", () => {
+        let vinoSeleccionado = {nombre, img, descripcion, precio}
+        localStorage.setItem("vinoSeleccionado", JSON.stringify(vinoSeleccionado))
+    })
+}
 
 document.addEventListener("DOMContentLoaded", async() => {
     const response = await fetch("./Final_Entrega/data.json")
     const data = await response.json()
 
-    data.forEach( (vino) => {
+    data.forEach( vino => {
         agregarVinos(vino)
     })
-
     actualizarCarrito()
 })
