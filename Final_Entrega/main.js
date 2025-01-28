@@ -124,12 +124,20 @@ const calcularTotalCarrito = () => {
                 title:  "Finalizar Compra",
                 showCancelButton: true,
                 cancelButtonText: "Volver al Carrito",
-                confirmButtonText: "Terminar Compra"
+                confirmButtonText: "Terminar Compra",
+                confirmButtonColor: "#328c43",
+                cancelButtonColor: "#783841",
+                background: "#211625",
+                color: "#c4bbc7"
             }).then((result)=>{
                 if(result.isConfirmed){
                     Swal.fire({
-                        title: "Gracias por su compra ¿Cual es su email?",
-                        input: "email"
+                        icon: "success",
+                        title: "Gracias por su compra!",
+                        timer: 2500,
+                        showConfirmButton: false,
+                        background: "#211625",
+                        color: "#b070c7"
                     }).then(() => {
                         ArrayCarrito = []
                         actualizarCarrito()
