@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm Jero Dominik</h1>
-<h3 align="center">A passionate student frontend developer from Mendoza, Argentina 🇦🇷</h3>
+<h3 align="center">A passionate frontend developer from Mendoza, Argentina 🇦🇷</h3>
 
 <h3 align="left">Languages and Tools:</h3>
 
